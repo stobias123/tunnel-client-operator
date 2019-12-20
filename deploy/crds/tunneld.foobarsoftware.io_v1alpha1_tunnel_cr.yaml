@@ -1,0 +1,8 @@
+apiVersion: tunneld.foobarsoftware.io/v1alpha1
+kind: Tunnel
+metadata:
+  name: example-tunnel
+spec:
+  server_addr: 1.2.3.4:5223
+  addr: example:8080
+  host: blah

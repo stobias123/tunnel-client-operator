@@ -1,0 +1,6 @@
+server_addr: {{ cr.Spec.ServerAddr }}
+tunnels:
+  {{ cr.Name }}:
+    proto: http
+    addr: {{ cr.Spec.ServerAddr }}
+    host: {{ cr.Spec.Host }}

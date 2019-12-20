@@ -1,0 +1,74 @@
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: tunnels.tunneld.foobarsoftware.io
+spec:
+  group: tunneld.foobarsoftware.io
+  names:
+    kind: Tunnel
+    listKind: TunnelList
+    plural: tunnels
+    singular: tunnel
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      description: Tunnel is the Schema for the tunnels API
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          type: object
+        spec:
+          description: 'TunnelSpec defines the desired state of Tunnel Add custom
+            validation using kubebuilder tags: https://book-v1.book.kubebuilder.io/beyond_basics/generating_crd.html'
+          properties:
+            addr:
+              description: Addr specifies TCP address server would listen on, it's
+                required for TCP tunnels.
+              type: string
+            auth:
+              description: Auth specifies HTTP basic auth credentials in form "user:password",
+                if set server would protect HTTP and WS tunnels with basic auth.
+              type: string
+            host:
+              description: Host specified HTTP request host, it's required for HTTP
+                and WS tunnels.
+              type: string
+            protocol:
+              description: Protocol specifies tunnel protocol, must be one of protocols
+                known by the server.
+              type: string
+            server_addr:
+              type: string
+          required:
+          - addr
+          - host
+          - server_addr
+          type: object
+        status:
+          description: TunnelStatus defines the observed state of Tunnel
+          properties:
+            connection:
+              description: 'Important: Run "operator-sdk generate k8s" to regenerate
+                code after modifying this file Add custom validation using kubebuilder
+                tags: https://book-v1.book.kubebuilder.io/beyond_basics/generating_crd.html'
+              type: string
+          required:
+          - connection
+          type: object
+      type: object
+  version: v1alpha1
+  versions:
+  - name: v1alpha1
+    served: true
+    storage: true
